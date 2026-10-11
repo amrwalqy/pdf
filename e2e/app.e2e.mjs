@@ -399,6 +399,9 @@ describe("library sync with a large folder", () => {
   });
 
   test("says clearly when a PDF is damaged, instead of a generic failure", async () => {
+    // The preceding virtualization test opens shelf-00; reset the browsing scope before searching globally.
+    const rootButton = library.win.locator("button", { hasText: /^مجلد المكتبة$/ }).first();
+    if (await rootButton.count()) await rootButton.click();
     await library.win.getByPlaceholder("ابحث في مكتبة المستندات...").fill("book-1");
     await library.win.locator(".file-row", { hasText: "book-1.pdf" }).first().click({ timeout: 60_000 });
     await library.win.getByText("الملف تالف أو ليس بصيغة PDF صالحة.", { exact: false }).first().waitFor({ timeout: 60_000 });
