@@ -926,7 +926,7 @@ export default function App() {
         />
 
         <div className="flex min-h-0 flex-1" dir="ltr">
-          {!readerDoc && <Sidebar className="hidden lg:flex" {...sidebarProps} />}
+          {!readerDoc && <Sidebar className="hidden md:flex" {...sidebarProps} />}
 
           <main dir="rtl" className="flex min-w-0 flex-1 flex-col">
             {readerDoc ? (
