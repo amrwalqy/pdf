@@ -403,7 +403,10 @@ describe("library sync with a large folder", () => {
     const rootButton = library.win.locator("button", { hasText: /^مجلد المكتبة$/ }).first();
     if (await rootButton.count()) await rootButton.click();
     await library.win.getByPlaceholder("ابحث في مكتبة المستندات...").fill("book-1");
-    await library.win.locator(".file-row", { hasText: "book-1.pdf" }).first().click({ timeout: 60_000 });
+    const damagedRow = library.win.locator(".file-row", { hasText: "book-1.pdf" }).first();
+    await damagedRow.waitFor({ state: "attached", timeout: 60_000 });
+    await damagedRow.scrollIntoViewIfNeeded();
+    await damagedRow.click({ timeout: 60_000 });
     await library.win.getByText("الملف تالف أو ليس بصيغة PDF صالحة.", { exact: false }).first().waitFor({ timeout: 60_000 });
   });
 
