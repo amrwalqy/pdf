@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; img-src 'self' data: blob:; font-src 'self' data:; worker-src blob:; connect-src 'self' alif-file:; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline';"
+    />
+    <link rel="icon" type="image/png" href="./alif-logo.png" />
+    <link rel="apple-touch-icon" href="./alif-logo.png" />
+    <meta name="theme-color" content="#0a0f1e" />
+    <title>Alif PDF Reader — أليف</title>
+    <meta name="description" content="Alif PDF Reader — أليف: قارئ ملفات PDF على ويندوز مع مكتبة مجلدات وخزنة مشفّرة وأدوات دمج واستخراج وتوقيع." />
+    <script>
+      try {
+        var t = JSON.parse(localStorage.getItem("alif:theme-paint") || "null");
+        if (t && t.paper) {
+          var r = document.documentElement;
+          r.style.setProperty("--color-paper", t.paper);
+          if (t.ink) r.style.setProperty("--color-ink", t.ink);
+          r.style.colorScheme = t.scheme || "light";
+        }
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div id="root"><div class="alif-splash" style="position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;background:#090909"><img src="./alif-logo.png" alt="" width="112" height="112" style="border-radius:24px" /></div></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

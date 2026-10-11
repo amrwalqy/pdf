@@ -1,0 +1,62 @@
+# Alif — Windows packaging (electron-builder).
+# Build with: npm run dist:win   (or double-click 2-BUILD-EXE.cmd on Windows)
+appId: com.alif.reader
+productName: Alif
+copyright: Copyright © 2026 Alif
+
+directories:
+  output: release
+  buildResources: build
+
+files:
+  - dist/**/*
+  - electron/**/*
+  - package.json
+  - THIRD-PARTY-NOTICES.md
+
+# Keep the Electron entry point explicit in the packaged app.
+extraMetadata:
+  main: electron/main.cjs
+
+asar: true
+# Local builds never upload anything. Publishing is configured later, when a release channel exists.
+publish: null
+
+# Windows file association: Alif can be chosen as the PDF reader.
+fileAssociations:
+  - ext: pdf
+    name: Alif.PDF
+    description: PDF Document
+    mimeType: application/pdf
+    role: Viewer
+    # PDF files show the Alif icon in Explorer (build/icon.ico).
+    icon: icon.ico
+
+win:
+  target:
+    - nsis
+    - portable
+  icon: build/icon.ico
+  # Code signing is optional. Without a certificate the build stays unsigned (fine for local work).
+  # Set WIN_CSC_LINK (base64 or URL of the .pfx) and WIN_CSC_KEY_PASSWORD to sign; see README "توقيع المثبّت".
+  signtoolOptions:
+    signingHashAlgorithms:
+      - sha256
+    rfc3161TimeStampServer: http://timestamp.digicert.com
+
+nsis:
+  # Arabic installer UI (NSIS language identifier 1025).
+  language: 1025
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: Alif — قارئ المخطوطات
+  installerIcon: icon.ico
+  uninstallerIcon: icon.ico
+  installerHeaderIcon: icon.ico
+  include: build/installer.nsh
+  artifactName: Alif-Setup-${version}.${ext}
+
+portable:
+  artifactName: Alif-Portable-${version}.${ext}
